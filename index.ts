@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import routes from './src/api/routes';
 import log from './src/utils/logger';
 import * as dotenv from 'dotenv';
@@ -10,6 +10,13 @@ const port = process.env.PORT;
 // Body parsing Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
 app.use('/api/v1', routes);
 
