@@ -1,5 +1,9 @@
 import { Sequelize } from 'sequelize';
+import * as dotenv from 'dotenv';
 
-const sequelizeConnection = new Sequelize('mysql://root:SCw9jPUpUr6FHkzwCofo@containers-us-west-80.railway.app:7626/railway');
+dotenv.config();
+const dbUri: string = process.env.DBURI || '';
+
+const sequelizeConnection = new Sequelize(dbUri);
 
 export default sequelizeConnection;
